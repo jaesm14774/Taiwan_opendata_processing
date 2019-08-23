@@ -7,7 +7,7 @@
   此外，政府開放資料平台上，很多資料集標籤有誤，因類別並無仔細定義清楚，且未仔細審核，導致後來上傳資料者，為了方便皆填寫公共資訊，導致此項資訊幫助不大，因此透過爬蟲獲取資料集標籤，並重組資料，提升資料品質，最後建立分類模型，以期能改善大部分資料皆被分成公共資訊，以及部分資料貼錯標籤等現象，達到標籤資訊有實質意義的目標。
 
 
-## 下載政府開放資料(crawl_data)
+## 下載政府開放資料(Formal_crawl_data)
   從國網中心開放資料集平台(scidm)政府開放資料組織下，下載全部資料，並找出所有csv檔(一般民眾常用檔案格式，最類似xlsx)，如下圖:
   
  ![](https://i.imgur.com/AEy2ISq.png)
@@ -34,7 +34,7 @@
  下載與紀錄:curl_download(url,save_path);writeLines(Description_content) =>
  
  結束
- ### 資料清理(Auto_clean)
+ ### 資料清理(Final_Market中的Auto_clean)
   使用R語言data.table中的fread指令讀取檔案，以讀取過程，R產生的反應，作為good,warning,error判別依據，讀取檔案的編碼採用readr裡guess_encoding函數計算出機率最高的編碼作為編碼依據，如果沒有任何編碼超過20%，會歸類成無法處理。
   
 ![](https://i.imgur.com/YrgxHUP.png)
@@ -83,7 +83,7 @@ Ouput:
 
 *Check
 
-## 資料貼標(Tag)
+## 資料貼標(Final_Market中的Pred_fun，需先讀取Temp檔獲得模型)
 
 ### 資料
 1.針對政府開放資料，最後下載了16577筆的Title(資料集名稱)+datameta(資料集描述)，其中有681筆資料集名稱重複，透過隨機選取刪除重複標題，剩餘15896筆。
