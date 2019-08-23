@@ -10,13 +10,13 @@ library(ranger)
 library(tibble)
 library(fastNaiveBayes)
 library(tm)
-load(file='C:/Users/1903026/Desktop/Temp.RData')
+load(file='C:/Users/XXX/Desktop/model.RData')
 
 seg=worker()
-new_dict=fread('C:/Users/1903026/Downloads/add_word.txt',
+new_dict=fread('C:/Users/XXX/Downloads/add_word.txt',
                encoding='UTF-8')
 new_user_word(seg,new_dict[[1]])
-a=list.files('C:/Users/1903026/Downloads/transform',
+a=list.files('C:/Users/XXX/Downloads/transform',
              full.names = T,recursive = F)
 new_dict=NULL
 for(i in length(a)){
