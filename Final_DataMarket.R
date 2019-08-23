@@ -308,7 +308,7 @@ Auto_clean=function(data_path){
   }
 }
 #
-source('C:/Users/1903026/Desktop/test.R',encoding = 'UTF-8')
+source('C:/Users/XXX/Desktop/test.R',encoding = 'UTF-8')
 Pred_fun=function(txt){
   #remove number and English word
   txt=gsub(pattern = '[A-Za-z0-9]',replacement = '',x = txt)
