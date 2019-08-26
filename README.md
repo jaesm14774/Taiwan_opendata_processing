@@ -12,7 +12,7 @@
 
 下載Formal_crawl_data.R
 
-parameter:
+**parameter:**
 organ='政府開放資料彙整平台' #想找的組織
 download_num=100#一次下載的數量
 dealt_path='D:/nchc/dealt.csv'#處理過資料集紀錄的位置
@@ -23,7 +23,7 @@ update_num=1000 #要求多少筆的修改過的資料集從新到舊
 
 自動清理函數，輸入需要清理的csv檔案位置，需下載Final_Data_Market.R
 
-parameter:
+**parameter:**
 data_path #檔案位置
 
 ### Pred_fun
@@ -43,7 +43,7 @@ chinese_stopword.txt,
 
 transform 資料夾
 
-parameter:
+**parameter:**
 txt #文字
 
 ## 前情提要
