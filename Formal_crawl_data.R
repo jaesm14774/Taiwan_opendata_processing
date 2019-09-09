@@ -10,8 +10,8 @@ library(mgsub)
 #parameter
 organ='政府開放資料彙整平台' #想找的組織
 download_num=100#一次下載的數量
-dealt_path='D:/nchc/dealt.csv'#處理過資料集紀錄的位置
-save_dir_path='D:/nchc/'#下載後，希望儲存的資料夾位置
+dealt_path='D:/n/dealt.csv'#處理過資料集紀錄的位置
+save_dir_path='D:/n/'#下載後，希望儲存的資料夾位置
 update_num=1000 #要求多少筆的修改過的資料集從新到舊
 #處理用package_show的metadata_modified的日期，達到可以比較的格式
 #ex:2018-08-11 
