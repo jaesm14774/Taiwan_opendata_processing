@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: split chinese words</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for chinese_token {DataMarketFinal}"><tr><td>chinese_token {DataMarketFinal}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+split chinese words
+</h2>
+
+<h3>Description</h3>
+
+<p>It is chinese split function
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+chinese_token(x)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+
+<p>words,text
+</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>split words with list format
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Shunmao
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+#split words
+chinese_token('&lt;e6&gt;&lt;e5&gt;&lt;8c&gt;&lt;b8&gt;蝵迎&lt;bc&gt;&lt;b7&gt;&lt;e6&gt;鞈誘嚗誑&lt;e5&gt;&lt;8f&gt;郎撖&lt;b1&gt;&lt;e5&gt;&lt;e7&gt;&lt;90&gt;&lt;bd&gt;蔭鞈&lt;a8&gt;&lt;8a&gt;')
+## The function is currently defined as
+function (x)
+{
+  tokens=
+    lapply(x,function(x){
+      x=x 
+      x=x[!(x 
+      if(length(x) == 0){
+        return('&lt;e5&gt;&lt;e5&gt;鞈&lt;a8&gt;&lt;8a&gt;')
+      }else return(x)
+    })
+  if(length(tokens) == 0){
+    tokens=NA
+  }
+  return(tokens)
+ }
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>DataMarketFinal</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

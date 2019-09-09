@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Test data reading by accurate encoding</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for TEST_ENCODE {DataMarketFinal}"><tr><td>TEST_ENCODE {DataMarketFinal}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Test data reading by accurate encoding
+</h2>
+
+<h3>Description</h3>
+
+<p>Test data reading by accurate encoding
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+TEST_ENCODE(data)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>data</code></td>
+<td>
+
+<p>dataframe ,data need to test
+</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>string:
+Maybe wrong encode
+OK
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Shunmao
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(test_data5)
+TEST_ENCODE(test_data5)
+
+## The function is currently defined as
+function (data) 
+{
+    n = dim(data)[1]
+    if (n &gt; 0) {
+        guess1 = tryCatch(nchar(data[1, ], keepNA = F), warning = function(msg) return("W"), 
+            error = function(e) return("e"))
+    }
+    else {
+        guess1 = 0
+    }
+    if (n &gt; 4) {
+        guess2 = tryCatch(nchar(data[5, ], keepNA = F), warning = function(msg) return("W"), 
+            error = function(e) return("e"))
+    }
+    else {
+        guess2 = 0
+    }
+    guess3 = tryCatch(nchar(colnames(data), keepNA = F), warning = function(msg) return("W"), 
+        error = function(e) return("e"))
+    if (class(c(guess1, guess2, guess3)) == "character") {
+        return("Maybe wrong encode")
+    }
+    else {
+        return("OK")
+    }
+  }
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>DataMarketFinal</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

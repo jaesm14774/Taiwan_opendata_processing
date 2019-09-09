@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: guess_encoding of data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for SEARCH_ENCODE {DataMarketFinal}"><tr><td>SEARCH_ENCODE {DataMarketFinal}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+guess_encoding of data
+</h2>
+
+<h3>Description</h3>
+
+<p>guess_encoding of data
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+SEARCH_ENCODE(file_path)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>file_path</code></td>
+<td>
+
+<p>path of data(file)
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Use readr package of guess_encoding.
+If no probability of encoding more than 20
+Otherwise,return most probability of encoding
+</p>
+
+
+<h3>Value</h3>
+
+<p>guess of encoding result
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Shunmao
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(test_data1)
+tmp=tempfile(fileext = '.csv')
+writeLines(text=test_data1,con=tmp)
+SEARCH_ENCODE(tmp)
+unlink(tmp)
+
+## The function is currently defined as
+function (file_path) 
+{
+    a = tryCatch(readr::guess_encoding(file_path), error = function(e) return(matrix(NA, 
+        1, 1)))
+    if (is.na(a[1, 1])) {
+        return("unknown")
+    }
+    else {
+        return(a[1, 1] %&gt;% as.character())
+    }
+  }
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>DataMarketFinal</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

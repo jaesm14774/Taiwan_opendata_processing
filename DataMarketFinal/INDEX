@@ -1,0 +1,35 @@
+                        stopword
+Auto_clean              Combine all function.After Cleaning processing
+                        return good data or message of problem.
+D                       dtm form,only need variable names(column names)
+DataMarketFinal-package
+                        Clean and make data in one format, and also
+                        make a tag for this data
+Discri_HTML_File        Deter data is html format or not
+Discri_worse_file       Deter file is worse or not
+Discriminant            deter data contains at least one observation
+                        and two variables
+Do_crawl                crawl data from scidm
+Org_name                Information of organization in scidm
+Pred_fun                Final Prediction text model
+SEARCH_ENCODE           guess_encoding of data
+TEST_ENCODE             Test data reading by accurate encoding
+TXT                     All accessable package of title and datameta
+act_seg                 activate jiebar worker
+add_new_words           add self new words in jiebar
+chinese_token           split chinese words
+convert_appear          change 0-1 value to No-Yes
+deter                   Determine file condition by using fread command
+model1                  fastNaiveBayes model
+model2                  RandomForest
+model3                  SVM linear kernel
+new_data                Total data for tag issue
+new_dict1               new words add in jiebar worker
+new_dict2               new words add in jiebar worker (sogo dict)
+rm_rowANDcolumn_bad     remove meaningless column or row
+solve_problem_1         Renames duplicated column names
+test_data1              data prepare for rm_rowANDcolumn_bad
+test_data2              data prepare for Discri_HTML_File
+test_data3              data prepare for Discri_worse_file
+test_data4              data prepare for solve_problem_1
+test_data5              data prepare for TEST_ENCODE

@@ -1,0 +1,20 @@
+Package: DataMarketFinal
+Type: Package
+Title: Clean and make data in one format, and also make a tag for this
+        data
+Version: 1.0
+Date: 2019-09-05
+Author: Shunmao
+Maintainer: QQ<QQ@gmail.com>
+Description: Government of data is not unified,so this package want to make data be in one format.
+             Package contains detecting worse & html file function,automatic guessing encoding of file is what,cleaning meaningless row & column,
+			 and after doing other processing, return final result.Result maybe clean data or message of can not be dealt.   
+Depends: R (>= 3.5.0)
+License: GPL (>= 2)
+Imports: stringr, dplyr, data.table, readr, doParallel, glue, stringr,
+        tidytext, jiebaR, e1071, ranger, fastNaiveBayes, tibble, ckanr,
+        curl, rvest, lubridate, tm
+LazyData: true
+NeedsCompilation: no
+Packaged: 2019-09-09 03:21:45 UTC; lenovo
+Built: R 3.6.1; ; 2019-09-09 03:22:26 UTC; windows

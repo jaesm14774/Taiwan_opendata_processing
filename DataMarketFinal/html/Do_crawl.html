@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: crawl data from scidm</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for Do_crawl {DataMarketFinal}"><tr><td>Do_crawl {DataMarketFinal}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+crawl data from scidm 
+</h2>
+
+<h3>Description</h3>
+
+<p>crawl lastest 1000 data from scidm.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+Do_crawl(organ, dealt_path, save_dir_path)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>organ</code></td>
+<td>
+
+<p>organization you want to crawl
+</p>
+</td></tr>
+<tr valign="top"><td><code>dealt_path</code></td>
+<td>
+
+<p>record file is dealt with.It has three variables(&quot;package&quot;,&quot;condition&quot;,&quot;last_modified&quot;)
+</p>
+</td></tr>
+<tr valign="top"><td><code>save_dir_path</code></td>
+<td>
+
+<p>The directory path you want to save download files
+</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Shunmao
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+#parameter
+organ='chinese_organization_name' #What organization you want to download
+dealt_path='C:/Users/X/Desktop/dir/dealt.csv'#record already download package id
+save_dir_path='C:/Users/X/Desktop/dir/'#path of saving file
+#set ckan
+ckanr_setup(url='https://scidm.nchc.org.tw/')
+Do_crawl(organ,
+         dealt_path,
+         save_dir_path)
+
+## The function is currently defined as
+function (organ, dealt_path, save_dir_path) 
+{
+    c1 = makeCluster(4)
+    registerDoParallel(c1)
+    Target = Org_name[which(Org_name[, 1] == organ), ]
+    dealt_package = fread(dealt_path)
+    setDF(dealt_package)
+    a = package_search(q = paste0("organization:", Target[, 2]), 
+        rows = 1000)
+    pack_id = sapply(a$results, with, id)
+    p1 = which(pack_id %in% dealt_package[, 1])
+    if (length(p1) == 0) {
+        x = data.frame(package = pack_id, condition = 1, last_modified = sapply(a$results, 
+            with, metadata_modified) %&gt;% ymd_hms() %&gt;% as_date() %&gt;% 
+            as.character())
+        fwrite(x = x, file = dealt_path, append = T)
+        a = a$results
+    }
+    else {
+        aa = a$results[p1]
+        setDT(dealt_package)
+        setkey(dealt_package, package)
+        last_record_time = dealt_package[sapply(aa, with, id), 
+            ] %&gt;% .[[3]]
+        new_record_time = sapply(aa, with, metadata_modified) %&gt;% 
+            ymd_hms() %&gt;% as_date() %&gt;% as.character()
+        p = which(last_record_time == new_record_time)
+        if (length(p) == length(aa)) {
+            print(paste0("No new package in dealt.csv", " need to update."))
+            if (length(p) == length(a$results)) {
+                return(paste0("No new package in ", organ, " need to update."))
+            }
+            else {
+                x = data.frame(package = pack_id[-p1], condition = 1, 
+                  last_modified = sapply(a$results[-p1], with, 
+                    metadata_modified) %&gt;% ymd_hms() %&gt;% as_date() %&gt;% 
+                    as.character())
+                fwrite(x = x, file = dealt_path, append = T)
+                a = a$results[-p1]
+            }
+        }
+        else {
+            aa = aa[-p]
+            p = which(dealt_package[[1]] %in% sapply(aa, with, 
+                id))
+            dealt_package = dealt_package[-p, ]
+            x = data.frame(package = sapply(aa, with, id), condition = 1, 
+                last_modified = sapply(aa, with, metadata_modified) %&gt;% 
+                  ymd_hms() %&gt;% as_date() %&gt;% as.character())
+            y = data.frame(package = pack_id[-p1], condition = 1, 
+                last_modified = sapply(a$results[-p1], with, 
+                  metadata_modified) %&gt;% ymd_hms() %&gt;% as_date() %&gt;% 
+                  as.character())
+            dealt_package = rbind(dealt_package, x, y)
+            fwrite(x = dealt_package, file = dealt_path, append = F)
+            a = a[-p1]
+            a[(length(a) + 1):(length(a) + length(aa))] = aa
+        }
+    }
+    z = foreach(i = 1:length(a), .packages = c("ckanr", "doParallel", 
+        "foreach"), .export = "a") %dopar% {
+        ckanr_setup(url = "https://scidm.nchc.org.tw/", key = "ef4818c0-9d26-4f47-b18e-f99da4d5990f")
+        path = paste(save_dir_path, a[[i]]$id, sep = "")
+        dir.create(path)
+		p=which(sapply(a[[i]]$extras,with,key) == 'fieldDescription')
+		if(length(p) == 0){
+		  x=c(paste0('id:',a[[i]]$id),"",
+			  paste0('title:',a[[i]]$title),"",
+			  paste0('datameta:',a[[i]]$notes),"",
+			  paste0('maintainer:',a[[i]]$maintainer),"",
+			  paste0('maintainer_email:',a[[i]]$maintainer_email),"",
+			  paste0('author:',a[[i]]$author),"",
+			  paste0('author_email:',a[[i]]$author_email),"",
+			  paste0('fieldDescription:',""),"") 
+		}else{
+		  x=c(paste0('id:',a[[i]]$id),"",
+			  paste0('title:',a[[i]]$title),"",
+			  paste0('datameta:',a[[i]]$notes),"",
+			  paste0('maintainer:',a[[i]]$maintainer),"",
+			  paste0('maintainer_email:',a[[i]]$maintainer_email),"",
+			  paste0('author:',a[[i]]$author),"",
+			  paste0('author_email:',a[[i]]$author_email),"",
+			  paste0('fieldDescription:',
+					 (a[[i]]$extras[[p]]) 
+					   with(value) 
+					   gsub(pattern = '\s+',
+							replacement = '',
+							x=.)),"") 
+		}
+        temp = a[[i]]$resources
+        if (length(temp) == 0) {
+            y = "no resources"
+        }
+        else {
+            y = foreach(j = 1:length(temp), .packages = c("ckanr", 
+                "curl"), .export = "temp", .combine = "c") %dopar% 
+                {
+                  ckanr_setup(url = "https://scidm.nchc.org.tw/", 
+                    key = "ef4818c0-9d26-4f47-b18e-f99da4d5990f")
+                  deter = tryCatch(curl_download(url = temp[[j]]$url, 
+                    destfile = paste(path, "/", j, ".", temp[[j]]$format %&gt;% 
+                      tolower(), sep = "")), error = function(e) -1)
+                  if (deter == (-1)) {
+                    paste(j, ":", temp[[j]]$name %&gt;% gsub(pattern = "[\r\n]", 
+                      replacement = ""), " id: ", temp[[j]]$id, 
+                      " can not access to the url", sep = "")
+                  }
+                  else {
+                    paste(j, ":", temp[[j]]$name %&gt;% gsub(pattern = "[\r\n]", 
+                      replacement = ""), " id: ", temp[[j]]$id, 
+                      sep = "")
+                  }
+                }
+        }
+        writeLines(text = c(x, y), con = paste(path, "/description.txt", 
+            sep = ""), useBytes = T)
+    }
+    stopCluster(c1)
+    return("Done")
+  }
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>DataMarketFinal</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

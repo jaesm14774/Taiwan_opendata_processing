@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: deter data contains at least one observation and two...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for Discriminant {DataMarketFinal}"><tr><td>Discriminant {DataMarketFinal}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+deter data contains at least one observation and two variables
+</h2>
+
+<h3>Description</h3>
+
+<p>deter data contains at least one observation and two variables
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+Discriminant(data)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>data</code></td>
+<td>
+
+<p>data:matrix or dataframe
+</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>string:OK
+Check,it maybe something wrong
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Shunmao
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+## The function is currently defined as
+function (data) 
+{
+    if (dim(data)[2] == 1) {
+        return("Check,it maybe something wrong.")
+    }
+    if (dim(data)[1] == 0) {
+        return("Check,it maybe something wrong.")
+    }
+    return("OK")
+  }
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>DataMarketFinal</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

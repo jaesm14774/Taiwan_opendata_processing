@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Deter data is html format or not</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for Discri_HTML_File {DataMarketFinal}"><tr><td>Discri_HTML_File {DataMarketFinal}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Deter data is html format or not
+</h2>
+
+<h3>Description</h3>
+
+<p>Deter data is html format or not
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+Discri_HTML_File(file_path)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>file_path</code></td>
+<td>
+
+<p>path of data(file)
+</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>logical:TRUE or FALSE
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Shunmao
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+#detect html format of data
+data(test_data2)
+tmp=tempfile(fileext = '.csv')
+writeLines(text=test_data2,con=tmp)
+Discri_HTML_File(data_path=tmp)
+unlink(tmp)
+
+## The function is currently defined as
+function (file_path) 
+{
+    yes = "&lt;html|&lt;style|font-size|&lt;span|body  onload|background-|&lt;script|color|\.style|&lt;meta|&lt;open|&lt;head|&lt;!DOCTYPE|&lt;title|&lt;body|&lt;kml|&lt;name|&lt;SimpleField|&lt;link|&lt;div|&lt;table|&lt;input|&lt;form|&lt;/"
+    code = SEARCH_ENCODE(file_path)
+    discri_text = readLines(con = file_path, n = 25, encoding = ifelse(code == 
+        "unknown", "UTF-8", code))
+    ifelse(sum(grepl(discri_text, pattern = yes)) &gt; 4, TRUE, 
+        FALSE) %&gt;% return
+  }
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>DataMarketFinal</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

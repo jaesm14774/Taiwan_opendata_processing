@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: remove meaningless column or row</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for rm_rowANDcolumn_bad {DataMarketFinal}"><tr><td>rm_rowANDcolumn_bad {DataMarketFinal}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+remove meaningless column or row
+</h2>
+
+<h3>Description</h3>
+
+<p>remove meaningless column or row
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+rm_rowANDcolumn_bad(data)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>data</code></td>
+<td>
+
+<p>dataframe
+</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>return data remove all rows or columns are NA or &rdquo;
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Shunmao
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(test_data1)
+rm_rowANDcolumn_bad(test_data2)
+
+## The function is currently defined as
+function (data) 
+{
+    row_n = nrow(data)
+    col_n = ncol(data)
+    if (row_n == 0) {
+        return(data)
+    }
+    na_col = sapply(data, is.na) %&gt;% matrix(ncol = col_n) %&gt;% 
+        apply(2, sum)
+    space_col = sapply(data, function(x) x == "") %&gt;% matrix(ncol = col_n) %&gt;% 
+        apply(2, sum, na.rm = T)
+    c1 = (na_col == row_n) %&gt;% which
+    c2 = (space_col == row_n) %&gt;% which
+    c_total = union(c1, c2)
+    keep_c = setdiff(1:col_n, c_total)
+    bad_row = apply(data, 1, function(x) x %in% c("", NA)) %&gt;% 
+        t %&gt;% apply(1, sum)
+    r_total = which(bad_row == col_n)
+    keep_r = setdiff(1:row_n, r_total)
+    data %&gt;% select(keep_c) %&gt;% slice(keep_r) %&gt;% return
+  }
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>DataMarketFinal</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

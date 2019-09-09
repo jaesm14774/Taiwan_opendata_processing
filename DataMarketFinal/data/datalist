@@ -1,0 +1,15 @@
+D: .Random.seed D
+Org_name
+TXT
+model1: .Random.seed model1
+model2: .Random.seed model2
+model3: .Random.seed model3
+new_data
+new_dict1: .Random.seed new_dict1
+new_dict2: .Random.seed new_dict2
+stopword
+test_data1
+test_data2: .Random.seed test_data2
+test_data3
+test_data4
+test_data5: .Random.seed test_data5

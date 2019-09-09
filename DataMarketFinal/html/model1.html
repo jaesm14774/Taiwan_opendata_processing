@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: fastNaiveBayes model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for model1 {DataMarketFinal}"><tr><td>model1 {DataMarketFinal}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+fastNaiveBayes model
+</h2>
+
+<h3>Description</h3>
+
+<p>Train by fastNaiveBayes
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>data("model1")</pre>
+
+
+<h3>Format</h3>
+
+<p>The format is:
+List of 3
+$ probability_table:List of 1
+..$ present: num [1:15, 1:6287] 0.00113 0 0 0.00194 0 ...
+.. ..- attr(*, &quot;dimnames&quot;)=List of 2
+.. .. ..$ : chr [1:15] &quot;&lt;U+516C&gt;&lt;U+5171&gt;&lt;U+8CC7&gt;&lt;U+8A0A&gt;&quot; &quot;&lt;U+751F&gt;&lt;U+80B2&gt;&lt;U+4FDD&gt;&lt;U+5065&gt;&quot; &quot;\245\315\251R\302\247\273\366&quot; &quot;&lt;U+751F&gt;&lt;U+6D3B&gt;&lt;U+5B89&gt;&lt;U+5168&gt;&lt;U+53CA&gt;&lt;U+54C1&gt;&lt;U+8CEA&gt;&quot; ...
+.. .. ..$ : chr [1:6287] &quot;\244p\262\325&quot; &quot;\246w\245\376&quot; &quot;\246\346\254F\260|&quot; &quot;\250\372\275l&quot; ...
+$ priors           : 'table' num [1:15(1d)] 0.1288 0.0372 0.0147 0.1304 0.1022 ...
+..- attr(*, &quot;dimnames&quot;)=List of 1
+.. ..$ y: chr [1:15] &quot;&lt;U+516C&gt;&lt;U+5171&gt;&lt;U+8CC7&gt;&lt;U+8A0A&gt;&quot; &quot;&lt;U+751F&gt;&lt;U+80B2&gt;&lt;U+4FDD&gt;&lt;U+5065&gt;&quot; &quot;\245\315\251R\302\247\273\366&quot; &quot;&lt;U+751F&gt;&lt;U+6D3B&gt;&lt;U+5B89&gt;&lt;U+5168&gt;&lt;U+53CA&gt;&lt;U+54C1&gt;&lt;U+8CEA&gt;&quot; ...
+$ names            : chr [1:6287] &quot;\244p\262\325&quot; &quot;\246w\245\376&quot; &quot;\246\346\254F\260|&quot; &quot;\250\372\275l&quot; ...
+- attr(*, &quot;class&quot;)= chr &quot;fastNaiveBayes.multinomial&quot;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(model1)
+## maybe str(model1) ; plot(model1) ...
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>DataMarketFinal</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

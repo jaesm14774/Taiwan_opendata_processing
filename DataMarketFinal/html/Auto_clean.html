@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Combine all function.After Cleaning processing return good...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for Auto_clean {DataMarketFinal}"><tr><td>Auto_clean {DataMarketFinal}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Combine all function.After Cleaning processing return good data or message of problem.
+</h2>
+
+<h3>Description</h3>
+
+<p>Input path of data, then this function will read file,do cleaning process, and output good data automatically.
+If data has some problems,it will return message .
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+Auto_clean(data_path)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>data_path</code></td>
+<td>
+
+<p>path of data
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>It combine many function to achieve automatically cleaning.
+First it guess data encoding,read it. Then check data is html format or worse file or not.
+Then Use fread  to read it,if happens warning or error,take some action to 
+compensate(delete guess wrong line to avoid problem appearing);otherwise,check duplicated column name problem,
+meaningless line or row,and delete description words.Return cleaning data or return problem of message.
+</p>
+
+
+<h3>Value</h3>
+
+<p>1.data.frame of cleaning data
+2.HTML file(Message implies this data is html format of data)
+3.bad file or small file(Message implies this data is bad file or dimension of data is small)
+4.Check(Message implies data is strange after processing data.Maybe something wrong in some single functions)	
+5.some description of problem 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Shunmao
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+#remove description words
+data(test_data1)
+print(test_data1)
+print(Auto_clean(test_data1))
+#detect html format of data
+data(test_data2)
+tmp=tempfile(fileext = '.csv')
+writeLines(text=test_data2,con=tmp)
+Auto_clean(data_path=tmp)
+unlink(tmp)
+#detect worse data
+data(test_data3)
+tmp=tempfile(fileext = '.csv')
+writeLines(text=test_data3,con=tmp)
+Auto_clean(data_path=tmp)
+unlink(tmp)
+#solve duplicated column name
+data(test_data4)
+tmp=tempfile(fileext = '.csv')
+writeLines(text=test_data4,con=tmp)
+Auto_clean(data_path=tmp)
+unlink(tmp)
+
+## The function is currently defined as
+function (data_path)
+{
+  if(!grepl(x = data_path,pattern = '\.csv')){
+    stop('Error for not csv file')
+  }else{
+    if(Discri_HTML_File(data_path)){
+      return('HTML file')
+    }
+    if(Discri_worse_file(data_path)){
+      return('worse file or small file')
+    }
+    stat=deter(data_path)
+    if(stat 
+      #guess separator of variable
+      separators &lt;- c(',' , ';' , ' ' , '\t' , '\|' , ':')
+      guess_sep=function(line){
+        separators &lt;- c(',', ';', ' ', '\t', '\|' , ':')
+        n=NULL
+        for(sep in separators){
+          n=c(n,str_count(string = line,pattern = sep))
+        }
+        return(which.max(n) 
+      }
+      Auto_clean2=function(data_path){
+        code=SEARCH_ENCODE(data_path)
+        if(code == 'unknown'){
+          return('Can not solve for encoding')
+        }else code=code
+        b=readLines(data_path,encoding = code)
+        DE=sapply(X = b,FUN = guess_sep,USE.NAMES = F) 
+        DE=table(DE) 
+        DE_sep=which.max(DE) 
+        DE=
+          sapply(b,FUN = function(x){
+            str_count(string = x,pattern = DE_sep)
+          },USE.NAMES = F)
+        dE=table(DE)
+        DE_max=which.max(dE) 
+        if(max(dE)&lt;((4/5)*length(b))){
+          return('Can not solve for separate sign')
+        }else{
+          b=b[DE == DE_max]
+          temp=tempfile()
+          writeLines(text = b,con = temp,useBytes = T)
+          stat=deter(temp)
+          if(stat == 'warning'){
+            unlink(temp)
+            return('Cannot handle.')
+          }else if(stat == 'error'){
+            unlink(temp)
+            return('Cannot handle.')
+          }else{
+            code=SEARCH_ENCODE(temp)
+            data=fread(temp,encoding=ifelse(code == 'UTF-8','UTF-8','unknown'),
+                       integer64 = 'numeric')
+            if(TEST_ENCODE(data) == 'Maybe wrong encode'){#try to revise warning by changing encoding
+              if(code == 'UTF-8'){
+                data=fread(temp,encoding='unknown',integer64 = 'numeric')
+              }else{
+                data=fread(temp,encoding='UTF-8',integer64 = 'numeric')
+              }
+            }else{#do nothing
+              data=data
+            }
+            setDF(data)
+            #discri_duplicated_variable_name
+            if(length(colnames(data)) != length(unique(colnames(data)))){
+              data=solve_problem_1(data)
+            }
+            #discri_first_column is description text or not
+            if(dim(data)[2] &gt;2){
+              discri=grepl(x=data[1,],pattern ='[\u4E00-\u9FA5]+|[0-9]') 
+                sum
+              while(discri == 1){
+                data=data[-1,]
+                discri=grepl(x=data[1,],pattern='[\u4E00-\u9FA5]+|[0-9]') 
+                  sum
+              }
+            }else{
+              data=data
+            }
+            #clean- remove column or row contains whole  "" or NA
+            data=rm_rowANDcolumn_bad(data)
+            if(Discriminant(data) == 'OK'){
+              return(data)
+            }else{
+              return('Check')
+            }
+          }
+        }
+      }
+    }else{
+      code=SEARCH_ENCODE(data_path)
+      data=fread(data_path,encoding=ifelse(code == 'UTF-8','UTF-8','unknown'),integer64 = 'numeric')
+      if(TEST_ENCODE(data) == 'Maybe wrong encode'){#try to revise warning by changing encoding
+        if(code == 'UTF-8'){
+          data=fread(data_path,encoding='unknown',integer64 = 'numeric')
+        }else{
+          data=fread(data_path,encoding='UTF-8',integer64 = 'numeric')
+        }
+      }else{#do nothing
+        data=data
+      }
+      setDF(data)
+      #discri_duplicated_variable_name
+      if(length(colnames(data)) != length(unique(colnames(data)))){
+        data=solve_problem_1(data)
+      }
+      
+      #discri_first_column is description text or not
+      if(dim(data)[2] &gt;2){
+        discri=grepl(x=data[1,],pattern ='[\u4E00-\u9FA5]+|[0-9]') 
+          sum
+        while(discri == 1){
+          data=data[-1,]
+          discri=grepl(x=data[1,],pattern='[\u4E00-\u9FA5]+|[0-9]') 
+            sum
+        }
+      }else{
+        data=data
+      }
+      #clean- remove column or row contains whole  "" or NA
+      data=rm_rowANDcolumn_bad(data)
+      if(Discriminant(data) == 'OK'){
+        colnames(data)=gsub(pattern = '\n|\t',replacement = '',x = colnames(data))
+        return(data)
+      }else{
+        return('Check')
+      }
+    } 
+  }
+ </pre>
+
+<hr /><div style="text-align: center;">[Package <em>DataMarketFinal</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

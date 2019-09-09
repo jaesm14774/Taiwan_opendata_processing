@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Renames duplicated column names</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for solve_problem_1 {DataMarketFinal}"><tr><td>solve_problem_1 {DataMarketFinal}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Renames duplicated column names
+</h2>
+
+<h3>Description</h3>
+
+<p>Renames duplicated column names
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+solve_problem_1(data)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>data</code></td>
+<td>
+
+<p>dataframe
+</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>data after renaming if data has duplicated column names
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Shunmao
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(test_data4)
+tmp=tempfile(fileext = '.csv')
+writeLines(text=test_data4,con=tmp)
+solve_problem_1(data_path=tmp)
+unlink(tmp)
+
+## The function is currently defined as
+function (data) 
+{
+    col_name = colnames(data)
+    i = 1
+    while (duplicated(col_name) %&gt;% sum != 0) {
+        p = duplicated(col_name) %&gt;% which
+        col_name[p] = str_replace(string = col_name[p], pattern = "\.\d+", 
+            "")
+        col_name[p] = paste0(col_name[p], ".", i)
+        i = i + 1
+    }
+    colnames(data) = col_name
+    return(data)
+  }
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>DataMarketFinal</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>
