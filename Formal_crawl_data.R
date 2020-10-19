@@ -129,7 +129,7 @@ Do_crawl=function(organ,dealt_path,save_dir_path,download_num,
   Packages=
     foreach(i=1:download_num,.export = 'x',.packages = 'ckanr') %dopar%{
       ckanr_setup(url='https://scidm.nchc.org.tw/',
-                  key='ef4818c0-9d26-4f47-b18e-f99da4d5990f')
+                  key='')
       package_show(x[i])
     }
   #Record last modified date of package & some text modified
@@ -162,7 +162,7 @@ Do_crawl=function(organ,dealt_path,save_dir_path,download_num,
               .packages=c('ckanr','doParallel','foreach'),
               .export=c('Total_data','save_dir_path')) %dopar%{
                 ckanr_setup(url='https://scidm.nchc.org.tw/',
-                            key = 'ef4818c0-9d26-4f47-b18e-f99da4d5990f')
+                            key = '')
                 path=paste(save_dir_path,Total_data[[i]]$id,
                            sep='')
                 if(!dir.exists(path)){
