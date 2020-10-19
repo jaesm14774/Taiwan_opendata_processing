@@ -36,7 +36,7 @@ Do_crawl=function(organ,dealt_path,save_dir_path,download_num,
   c1=makeCluster(4)
   registerDoParallel(c1)
   ckanr_setup(url='https://scidm.nchc.org.tw/',
-              key = 'ef4818c0-9d26-4f47-b18e-f99da4d5990f')
+              key = '')
   #政府開放資料彙整平台
   #find id code with organization we want
   organ_name=organization_list()
