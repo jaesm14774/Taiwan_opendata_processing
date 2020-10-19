@@ -201,7 +201,7 @@ Do_crawl=function(organ,dealt_path,save_dir_path,download_num,
                             .export=c('temp','path'),
                             .combine='c') %dopar%{
                               ckanr_setup(url='https://scidm.nchc.org.tw/',
-                                          key = 'ef4818c0-9d26-4f47-b18e-f99da4d5990f')
+                                          key = '')
                               #預防沒權限進入網址，發生的error
                               deter=tryCatch(
                                 curl_download(url=temp[[j]]$url,
